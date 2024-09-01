@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 const incentives = [
     {
       name: 'Free Shipping',
@@ -28,7 +30,7 @@ const incentives = [
           <div className="grid grid-cols-1 [&>div]:flex [&>div]:flex-col [&>div]:items-center [&>div]:text-center gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
             {incentives.map((incentive) => (
               <div key={incentive.name}>
-                <img src={incentive.imageSrc} alt="" className="h-24 w-auto dark:bg-primary dark:rounded-[50%]" />
+                <Image src={incentive.imageSrc} width={96} height={96}  alt="fotter-image" className="h-24 w-24 dark:bg-primary dark:rounded-[50%]" />
                 <h3 className="mt-6 text-sm font-medium text-gray-900 dark:text-white">{incentive.name}</h3>
                 <p className="mt-2 text-sm dark:text-muted-foreground">{incentive.description}</p>
               </div>
