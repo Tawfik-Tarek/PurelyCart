@@ -146,7 +146,7 @@ const ProductVarient = React.forwardRef<
         </DialogHeader>
 
         <FormProvider {...formMethods}>
-          <form onSubmit={formMethods.handleSubmit(onSubmit)}>
+          <form onSubmit={formMethods.handleSubmit(onSubmit)} className="space-y-2">
             <FormField
               control={formMethods.control}
               name="productType"
