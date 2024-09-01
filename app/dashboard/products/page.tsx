@@ -25,8 +25,8 @@ export default async function Products() {
       title: product.title,
       description: product.description,
       price: product.price,
-      variants: [] ,
-      image : placeholder.src
+      variants: product.productVariants,
+      image : product.productVariants[0]?.variantImages[0]?.url || placeholder.src,
     };
   });
 

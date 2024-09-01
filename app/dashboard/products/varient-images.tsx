@@ -4,7 +4,6 @@ import {VrientSchema as VariantSchema } from "@/types/vrient-schema"
 import { useFieldArray, useFormContext } from "react-hook-form"
 import * as z from "zod"
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -14,8 +13,6 @@ import {
 import { UploadDropzone } from "@/utils/uploadthing"
 import {
   Table,
-  TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,

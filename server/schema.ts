@@ -133,7 +133,7 @@ export const productVariants = pgTable( "productVariants", {
 export const variantImages = pgTable( "variantImages", {
   id: serial("id").primaryKey(),
   url: text("image").notNull(),
-  size: text("size").notNull(),
+  size: real("size").notNull(),
   name: text("name").notNull(),
   order : real("order").notNull(),
   updated : timestamp("updated", { mode: "date" }).defaultNow(),

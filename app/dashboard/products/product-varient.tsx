@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { VariantsWithImagesTags } from "@/lib/infer-type";
 import {
   Dialog,
@@ -25,7 +25,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { InputTags } from "./input-tags";
 import VariantImages from "./varient-images";
-
+import { addVarient } from "@/server/actions/add-varient";
+import { useAction } from "next-safe-action/hooks";
+import { toast } from "sonner";
+import { deleteVarient } from "@/server/actions/delete-varient";
 
 // ForwardRef to pass ref to the Dialog component
 const ProductVarient = React.forwardRef<
@@ -40,7 +43,7 @@ const ProductVarient = React.forwardRef<
   const formMethods = useForm<z.infer<typeof VrientSchema>>({
     resolver: zodResolver(VrientSchema),
     defaultValues: {
-      productID: productId,
+      productId: productId,
       id: undefined,
       editMode,
       productType: "",
@@ -50,8 +53,82 @@ const ProductVarient = React.forwardRef<
     },
   });
 
-  const onSubmit = () => {};
-  const [open, setOpen] = useState(false)
+  const { execute } = useAction(addVarient, {
+    onExecute: () => {
+      toast.loading("Saving Variant");
+    },
+
+    onSuccess: ({ data }) => {
+      if (data?.error) {
+        toast.dismiss();
+        toast.error(data.error.message);
+        return;
+      } else if (data?.success) {
+        toast.dismiss();
+        toast.success(data.success.message);
+        setOpen(false);
+      }
+    },
+  });
+
+  const DeleteVarient = useAction(deleteVarient, {
+    onExecute: () => {
+      toast.loading("Deleting Variant");
+    },
+    onSuccess: ({ data }) => {
+      if (data?.error) {
+        toast.dismiss();
+        toast.error(data.error.message);
+        return;
+      } else if (data?.success) {
+        toast.dismiss();
+        toast.success(data.success.message);
+        setOpen(false);
+      }
+    },
+  });
+
+  function deleteVariant() {
+    if (!variant) {
+      console.log("No variant found");
+      
+      return;
+    }
+    DeleteVarient.execute({ id: variant.id });
+  }
+
+  function editModeValues() {
+    if (!editMode) {
+      return;
+    }
+    if (editMode && variant) {
+      formMethods.setValue("id", variant.id);
+      formMethods.setValue("productId", productId);
+      formMethods.setValue("productType", variant.productType);
+      formMethods.setValue("color", variant.color);
+      formMethods.setValue(
+        "tags",
+        variant.variantTags.map((tag) => tag.tag)
+      );
+      formMethods.setValue(
+        "variantImages",
+        variant.variantImages.map((img) => ({
+          name: img.name,
+          url: img.url,
+          size: img.size,
+        }))
+      );
+    }
+  }
+
+  function onSubmit(data: z.infer<typeof VrientSchema>) {
+    execute(data);
+  }
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    editModeValues();
+  }, [editMode]);
 
   return (
     <Dialog modal={false} open={open} onOpenChange={setOpen}>
@@ -69,10 +146,7 @@ const ProductVarient = React.forwardRef<
         </DialogHeader>
 
         <FormProvider {...formMethods}>
-          <form
-            onSubmit={formMethods.handleSubmit(onSubmit)}
-            // className="space-y-4"
-          >
+          <form onSubmit={formMethods.handleSubmit(onSubmit)}>
             <FormField
               control={formMethods.control}
               name="productType"
@@ -108,7 +182,6 @@ const ProductVarient = React.forwardRef<
                 <FormItem>
                   <FormLabel>Varient Tags</FormLabel>
                   <FormControl>
-                    {/* Input tags */}
                     <InputTags {...field} onChange={(e) => field.onChange(e)} />
                   </FormControl>
                   <FormMessage />
@@ -118,13 +191,14 @@ const ProductVarient = React.forwardRef<
 
             <VariantImages />
 
-            <div className="flex justify-center mt-2">
+            <div className="flex justify-center items-center gap-4 py-8">
               {editMode && (
                 <Button
                   variant="destructive"
                   type="button"
                   onClick={(e) => {
                     e.preventDefault();
+                    deleteVariant();
                   }}
                 >
                   Delete Varient

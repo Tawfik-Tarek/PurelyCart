@@ -115,42 +115,40 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Variants",
     cell: ({ row }) => {
       const variants = row.getValue("variants") as VariantsWithImagesTags[];
-      
+
       return (
-        <div className="font-medium text-xs">
-          {variants.length > 0 && variants.map((variant , index) => {
-            return (
-              <div key={variant.id} className="flex items-center space-x-2">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <ProductVarient
-                        productId={variant.productId}
-                        editMode={true}
-                        variant={variant}
-                      >
-                        <div
-                          className="w-5 h-5 rounded-full"
-                          key={variant.id}
-                          style={{backgroundColor: variant.color}}
-                        />
-                      </ProductVarient>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{variant.productType}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-            );
-          })}
+        <div className="font-medium text-xs flex gap-2">
+          {variants.length > 0 &&
+            variants.map((variant, index) => {
+              return (
+                <div key={variant.id} className="flex items-center space-x-2">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <ProductVarient
+                          productId={variant.productId}
+                          editMode={true}
+                          variant={variant}
+                        >
+                          <div
+                            className="w-5 h-5 rounded-full"
+                            key={variant.id}
+                            style={{ backgroundColor: variant.color }}
+                          />
+                        </ProductVarient>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{variant.productType}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              );
+            })}
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <ProductVarient
-                  editMode={false}
-                  productId={row.original.id}
-                >
+                <ProductVarient editMode={false} productId={row.original.id}>
                   <PlusCircle className="h-6 w-6 cursor-pointer text-primary" />
                 </ProductVarient>
               </TooltipTrigger>

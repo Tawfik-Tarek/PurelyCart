@@ -1,7 +1,7 @@
 import * as z from "zod";
 
 export const VrientSchema = z.object({
-  productID: z.number(),
+  productId: z.number(),
   id: z.number().optional(),
   editMode: z.boolean(),
   productType: z
