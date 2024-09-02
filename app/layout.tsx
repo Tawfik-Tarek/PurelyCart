@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import Favicon from "@/public/favicon.ico";
 import Nav from "@/components/nav/nav";
+import { Roboto } from "next/font/google";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Footer from "@/components/footer/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
+
+const roboto = Roboto({
+  weight: ["400", "500", "700", "900"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+});
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn("px-6 md:px-12 max-w-7xl mx-auto", `${inter.className}`)}
+        className={cn("px-6 md:px-12 max-w-7xl mx-auto", `${roboto.className}`)}
       >
         <ThemeProvider
           attribute="class"
@@ -33,7 +40,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Nav />
-          <Toaster  richColors/>
+          <Toaster richColors />
           {children}
           <Footer />
         </ThemeProvider>

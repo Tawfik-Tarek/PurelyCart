@@ -53,7 +53,7 @@ const ProductVarient = React.forwardRef<
     },
   });
 
-  const { execute } = useAction(addVarient, {
+  const { execute, status } = useAction(addVarient, {
     onExecute: () => {
       toast.loading("Saving Variant");
     },
@@ -67,6 +67,7 @@ const ProductVarient = React.forwardRef<
         toast.dismiss();
         toast.success(data.success.message);
         setOpen(false);
+        formMethods.reset();
       }
     },
   });
@@ -91,7 +92,7 @@ const ProductVarient = React.forwardRef<
   function deleteVariant() {
     if (!variant) {
       console.log("No variant found");
-      
+
       return;
     }
     DeleteVarient.execute({ id: variant.id });
@@ -99,6 +100,7 @@ const ProductVarient = React.forwardRef<
 
   function editModeValues() {
     if (!editMode) {
+      formMethods.reset();
       return;
     }
     if (editMode && variant) {
@@ -146,7 +148,10 @@ const ProductVarient = React.forwardRef<
         </DialogHeader>
 
         <FormProvider {...formMethods}>
-          <form onSubmit={formMethods.handleSubmit(onSubmit)} className="space-y-2">
+          <form
+            onSubmit={formMethods.handleSubmit(onSubmit)}
+            className="space-y-2"
+          >
             <FormField
               control={formMethods.control}
               name="productType"
@@ -200,11 +205,23 @@ const ProductVarient = React.forwardRef<
                     e.preventDefault();
                     deleteVariant();
                   }}
+                  disabled={
+                    DeleteVarient.status == "executing" ||
+                    !formMethods.formState.isDirty ||
+                    !formMethods.formState.isValid
+                  }
                 >
                   Delete Varient
                 </Button>
               )}
-              <Button type="submit">
+              <Button
+                type="submit"
+                disabled={
+                  status == "executing" ||
+                  !formMethods.formState.isDirty ||
+                  !formMethods.formState.isValid
+                }
+              >
                 {editMode ? "Update" : "Create"} varient
               </Button>
             </div>

@@ -3,7 +3,7 @@ import Logo from "@/components/nav/logo";
 import UserButton from "@/components/nav/user-button";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { LogIn, ShoppingCartIcon } from "lucide-react";
+import { LogIn } from "lucide-react";
 
 const nav = async () => {
   const session = await auth();

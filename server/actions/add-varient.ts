@@ -2,15 +2,28 @@
 import { createSafeActionClient } from "next-safe-action";
 import { VrientSchema as VariantSchema } from "@/types/vrient-schema";
 import db from "..";
-import { productVariants } from "../schema";
+import { products, productVariants } from "../schema";
 import { variantImages as VarientImages } from "../schema";
 import { variantTags } from "../schema";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-const action = createSafeActionClient();
+import algoliasearch from "algoliasearch"
+
 type ImageType = z.infer<typeof VariantSchema.shape.variantImages>[number];
 type TagType = z.infer<typeof VariantSchema.shape.tags>[number];
+
+
+const action = createSafeActionClient();
+
+console.log(process.env.NEXT_PUBLIC_ALGOLIA_ID , process.env.ALGOLIA_ADMIN) ;
+
+
+const client = algoliasearch(
+  process.env.NEXT_PUBLIC_ALGOLIA_ID!,
+  process.env.ALGOLIA_ADMIN!
+)
+const algoliaIndex = client.initIndex("products");
 
 export const addVarient = action
   .schema(VariantSchema)
@@ -37,6 +50,10 @@ export const addVarient = action
         };
       }
 
+      const product = await db.query.products.findFirst({
+        where: eq(products.id, existingVarient[0].productId),
+      });
+
       await db
         .delete(variantTags)
         .where(eq(variantTags.variantId, existingVarient[0].id));
@@ -60,6 +77,15 @@ export const addVarient = action
           order: index,
         }))
       );
+
+      if (product) {
+        algoliaIndex.partialUpdateObject({
+          objectID: existingVarient[0].id.toString(),
+          id: existingVarient[0].productId,
+          variantImages: variantImages[0].url,
+          productType: productType,
+        });
+      }
 
       revalidatePath("/dashboard/products");
 
@@ -111,6 +137,18 @@ export const addVarient = action
         };
       }
 
+      const product = await db.query.products.findFirst({
+        where: eq(products.id, productId),
+      });
+
+      if (!product) {
+        return {
+          error: {
+            message: "Product not found",
+          },
+        };
+      }
+
       await db.insert(variantTags).values(
         tags.map((tag: TagType) => ({
           tag,
@@ -126,6 +164,17 @@ export const addVarient = action
           order: index,
         }))
       );
+
+      if (product) {
+        algoliaIndex.saveObject({
+          objectID: newVariant[0].id.toString(),
+          id: newVariant[0].productId,
+          title: product.title,
+          price: product.price,
+          productType: newVariant[0].productType,
+          variantImages: variantImages[0].url,
+        });
+      }
 
       revalidatePath("/dashboard/products");
 
