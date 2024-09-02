@@ -16,9 +16,6 @@ type TagType = z.infer<typeof VariantSchema.shape.tags>[number];
 
 const action = createSafeActionClient();
 
-console.log(process.env.NEXT_PUBLIC_ALGOLIA_ID , process.env.ALGOLIA_ADMIN) ;
-
-
 const client = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_ID!,
   process.env.ALGOLIA_ADMIN!
