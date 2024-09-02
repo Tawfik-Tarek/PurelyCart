@@ -3,7 +3,7 @@ import Logo from "@/components/nav/logo";
 import UserButton from "@/components/nav/user-button";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { LogIn } from "lucide-react";
+import { LogIn, ShoppingCartIcon } from "lucide-react";
 
 const nav = async () => {
   const session = await auth();
@@ -12,10 +12,9 @@ const nav = async () => {
     <header className="py-6">
       <nav>
         <ul className="flex justify-between items-center">
-          <li className="w-32">
+          <li>
             <Link href={"/"} aria-label="logo">
-              {" "}
-              <Logo />{" "}
+              <Logo />
             </Link>
           </li>
           {!session ? (
