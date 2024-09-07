@@ -16,12 +16,11 @@ export default async function Home() {
       <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
         <div className="relative mx-auto max-w-7xl sm:static">
           <div className="sm:max-w-lg">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-primary sm:text-6xl">
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-primary sm:text-5xl">
               Summer styles are finally here
             </h1>
             <p className="mt-4 text-lg text-gray-500 dark:text-white/75">
-              This year, our new summer collection will shelter you from the harsh elements of a world that doesn't care
-              if you live or die.
+             Best collection of summer styles for you. Get ready for summer with our new collection.
             </p>
           </div>
           <div>
@@ -35,6 +34,7 @@ export default async function Home() {
                     <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
                         <Image
+                        loading="lazy"
                           src={firstImg}
                           alt="first image"
                           placeholder="blur"
@@ -45,6 +45,7 @@ export default async function Home() {
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                       <Image
+                      loading="lazy"
                           src={secondImg}
                           alt="second image"
                           placeholder="blur"
@@ -57,6 +58,7 @@ export default async function Home() {
                     <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                       <Image
+                      loading="lazy"
                           src={thirdImg}
                           alt="first image"
                           placeholder="blur"
@@ -67,6 +69,7 @@ export default async function Home() {
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                       <Image
+                      loading="lazy"
                           src={fourthImg}
                           alt="fourth image"
                           placeholder="blur"
@@ -77,6 +80,7 @@ export default async function Home() {
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                       <Image
+                      loading="lazy"
                           src={sixthImg}
                           alt="sixth image"
                           placeholder="blur"
@@ -89,6 +93,7 @@ export default async function Home() {
                     <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                       <Image
+                      loading="lazy"
                           src={fifthImg}
                           alt="fifth image"
                           placeholder="blur"
@@ -99,6 +104,7 @@ export default async function Home() {
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                       <Image
+                      loading="lazy"
                           src={seventhImg}
                           alt="seventh image"
                           placeholder="blur"

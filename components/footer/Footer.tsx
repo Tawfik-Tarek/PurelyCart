@@ -1,43 +1,61 @@
-import Image from "next/image"
+import Logo from "../nav/logo";
+import SocialLinks from "./social-links";
+import FooterSection from "./footer-section";
 
-const incentives = [
-    {
-      name: 'Free Shipping',
-      description: "It's not actually free we just price it into the products. Someone's paying for it, and it's not us.",
-      imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-delivery-light.svg',
-    },
-    {
-      name: '24/7 Customer Support',
-      description: 'Our AI chat widget is powered by a naive series of if/else statements. Guaranteed to irritate.',
-      imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-chat-light.svg',
-    },
-    {
-      name: 'Fast Shopping Cart',
-      description: "Look how fast that cart is going. What does this mean for the actual experience? I don't know.",
-      imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-fast-checkout-light.svg',
-    },
-    {
-      name: 'Gift Cards',
-      description: "Buy them for your friends, especially if they don't like our store. Free money for us, it's great.",
-      imageSrc: 'https://tailwindui.com/img/ecommerce/icons/icon-gift-card-light.svg',
-    },
-  ]
-  
-  export default function Footer() {
-    return (
-      <div className="bg-background ">
-        <div className="mx-auto max-w-2xl px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:px-8">
-          <div className="grid grid-cols-1 [&>div]:flex [&>div]:flex-col [&>div]:items-center [&>div]:text-center gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
-            {incentives.map((incentive) => (
-              <div key={incentive.name}>
-                <Image src={incentive.imageSrc} width={96} height={96}  alt="fotter-image" className="h-24 w-24 dark:bg-primary dark:rounded-[50%]" />
-                <h3 className="mt-6 text-sm font-medium text-gray-900 dark:text-white">{incentive.name}</h3>
-                <p className="mt-2 text-sm dark:text-muted-foreground">{incentive.description}</p>
-              </div>
-            ))}
+export default function Footer() {
+  const shoppingCategories = [
+    { href: "/category/electronics", label: "Electronics" },
+    { href: "/category/fashion", label: "Fashion" },
+    { href: "/category/home-appliances", label: "Home Appliances" },
+    { href: "/category/beauty", label: "Beauty & Health" },
+    { href: "/category/sports", label: "Sports & Outdoors" },
+  ];
+
+  const customerServices = [
+    { href: "/help/shipping", label: "Shipping Information" },
+    { href: "/help/returns", label: "Returns & Refunds" },
+    { href: "/help/faqs", label: "FAQs" },
+    { href: "/help/contact", label: "Customer Support" },
+    { href: "/help/tracking", label: "Order Tracking" },
+  ];
+
+  const companyInfo = [
+    { href: "/about", label: "About Us" },
+    { href: "/team", label: "Meet the Team" },
+    { href: "/careers", label: "Careers" },
+    { href: "/blog", label: "Blog" },
+    { href: "/press", label: "Press Releases" },
+  ];
+
+  const legalInfo = [
+    { href: "/terms-of-service", label: "Terms of Service" },
+    { href: "/privacy-policy", label: "Privacy Policy" },
+    { href: "/cookie-policy", label: "Cookie Policy" },
+    { href: "/disclaimer", label: "Disclaimer" },
+    { href: "/accessibility", label: "Accessibility" },
+  ];
+
+  return (
+    <footer className="py-20">
+      <div className="xl:grid xl:grid-cols-3 gap-8">
+        <div className="flex flex-col justify-center items-center lg:block">
+          <Logo style="text-3xl text-center xl:text-start" size={30} />
+          <p className="mt-5 text-gray-600 dark:text-gray-300 text-center lg:text-start">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tincidunt, nunc nec ultricies.
+          </p>
+          <SocialLinks />
+        </div>
+        <div className="mt-16 md:grid md:grid-cols-2 xl:mt-0 xl:col-span-2">
+          <div className="grid grid-cols-2">
+            <FooterSection title="Shopping Categories" links={shoppingCategories} />
+            <FooterSection title="Customer Services" links={customerServices} />
+          </div>
+          <div className="mt-10 md:mt-0 grid grid-cols-2">
+            <FooterSection title="Company Info" links={companyInfo} />
+            <FooterSection title="Legal" links={legalInfo} />
           </div>
         </div>
       </div>
-    )
-  }
-  
+    </footer>
+  );
+}

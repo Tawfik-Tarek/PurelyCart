@@ -1,10 +1,11 @@
+import { cn } from "@/lib/utils";
 import { ShoppingCartIcon } from "lucide-react";
 
-const Logo = () => {
+const Logo = ({style , size} : {style?:string , size?:number}) => {
   return (
     <div className="flex items-center gap-1">
-      <ShoppingCartIcon className="text-primary" size={20} />
-      <h2 className="text-primary font-extrabold italic text-xl gap-2">ShopSphere</h2>
+      <ShoppingCartIcon className="text-primary" size={size || 20} />
+      <h2 className={cn(`text-primary font-extrabold italic text-xl gap-2 $` , style)}>ShopSphere</h2>
     </div>
   );
 };
