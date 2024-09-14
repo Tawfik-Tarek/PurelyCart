@@ -9,7 +9,7 @@ const nav = async () => {
   const session = await auth();
 
   return (
-    <header className="py-6">
+    <header className="py-6 h-[100px]">
       <nav>
         <ul className="flex justify-between items-center">
           <li>
