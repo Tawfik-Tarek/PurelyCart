@@ -30,11 +30,15 @@ export function Products({ variants }: ProductTypes) {
           <div className="flex justify-between ">
             <div className="font-medium">
               <h1>{variant.product.title}</h1>
-                <p className="text-sm text-black dark:text-white">{variant.productType}</p>
+              <p className="text-sm text-black dark:text-white">
+                {variant.productType}
+              </p>
             </div>
             <div>
-              <Badge variant={"secondary"}>{FormatPrice(variant.product.price)}</Badge>
-              </div>
+              <Badge variant={"secondary"}>
+                {FormatPrice(variant.product.price)}
+              </Badge>
+            </div>
           </div>
         </Link>
       ))}
