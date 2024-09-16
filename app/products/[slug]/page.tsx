@@ -1,4 +1,5 @@
 import ProductPick from "@/components/products/product-pick";
+import ProductShowcase from "@/components/products/product-showcase";
 import ProductType from "@/components/products/product-type";
 import FormatPrice from "@/lib/format-price";
 import db from "@/server";
@@ -55,16 +56,18 @@ export default async function ProductPage({
 
   return (
     <main className="min-h-[calc(100dvh-100px)]">
-      <section className="">
-        <div className="flex-1">images</div>
+      <section className=" flex flex-col md:flex-row gap-4 md:gap-8 lg:gap-12">
+        <div className="flex-1">
+          <ProductShowcase productVariants={productVariant.product.productVariants}/>
+        </div>
 
         <div className="flex flex-col gap-2 flex-1">
-          <p>{productVariant.product.title}</p>
+          <p className="font-bold text-2xl">{productVariant.product.title}</p>
           <div>
             <ProductType variants={productVariant.product.productVariants} />
           </div>
-          <Separator className="h-[1px] bg-black/30" />
-          <p className="text-2xl font-medium">
+          <Separator className="h-[1px] bg-black/30 my-2 dark:bg-gray-200" />
+          <p className="text-2xl font-medium py-2">
             {FormatPrice(productVariant.product.price)}
           </p>
           <div
