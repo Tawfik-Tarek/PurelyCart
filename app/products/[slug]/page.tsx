@@ -1,6 +1,7 @@
 import ProductPick from "@/components/products/product-pick";
 import ProductShowcase from "@/components/products/product-showcase";
 import ProductType from "@/components/products/product-type";
+import Reviews from "@/components/reviews/reviews";
 import FormatPrice from "@/lib/format-price";
 import db from "@/server";
 import { productVariants } from "@/server/schema";
@@ -92,6 +93,7 @@ export default async function ProductPage({
           </div>
         </div>
       </section>
+      <Reviews productId={productVariant.productId} />
     </main>
   );
 }

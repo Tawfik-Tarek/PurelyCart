@@ -26,36 +26,59 @@ import { Textarea } from "../ui/textarea";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAction } from "next-safe-action/hooks";
+import { addReview } from "@/server/actions/add-review";
+import { toast } from "sonner";
+import { useState } from "react";
 
 export default function ReviewsForm() {
   const search = useSearchParams();
   const productId = search.get("productId");
+  const [open, setOpen] = useState<boolean>(false);
+
+  const { execute, status } = useAction(addReview, {
+    onSuccess: ({ data }) => {
+      if (data?.success) {
+        toast.success(data.success.message);
+        setOpen(false);
+        form.reset();
+      } else if (data?.error) {
+        toast.error(data.error.message);
+      }
+    },
+  });
 
   const form = useForm<z.infer<typeof reviewsSchema>>({
     resolver: zodResolver(reviewsSchema),
     defaultValues: {
-      rating: 5,
+      rating: 0,
       comment: "",
+      productId: Number(productId),
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof reviewsSchema>) => {
-    console.log(data);
+  const onSubmit = (data: z.infer<typeof reviewsSchema>) => {
+    execute({
+      rating: data.rating,
+      comment: data.comment,
+      productId: Number(productId),
+    });
   };
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen} modal={false}>
       <PopoverTrigger asChild>
         <div className="w-full">
           <Button
             type="button"
             variant={"secondary"}
             className="w-full font-medium"
+            onClick={() => setOpen(true)}
           >
             Write a review
           </Button>
         </div>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className="relative">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
@@ -70,8 +93,8 @@ export default function ReviewsForm() {
                       id="comment"
                       placeholder="Write your review here"
                     />
-                    <FormMessage {...field} />
                   </FormControl>
+                  <FormMessage {...field} />
                 </FormItem>
               )}
             />
@@ -88,9 +111,9 @@ export default function ReviewsForm() {
                       placeholder="Rating must be between 1 and 5"
                       type="hidden"
                     />
-                    <FormMessage {...field} />
                   </FormControl>
-                  <div>
+                  <FormMessage {...field} />
+                  <div className="flex">
                     {[1, 2, 3, 4, 5].map((rating) => (
                       <motion.div
                         className="cursor-pointer relative"
@@ -103,8 +126,8 @@ export default function ReviewsForm() {
                           className={cn(
                             "text-primary bg-transparent transition-all duration-300 ease-in-outhover:text-yellow-500",
                             rating <= form.getValues("rating")
-                              ? "text-primary"
-                              : "text-muted"
+                              ? "fill-primary"
+                              : "fill-transparent",
                           )}
                           onClick={() => {
                             form.setValue("rating", rating);
@@ -117,10 +140,19 @@ export default function ReviewsForm() {
               )}
             />
 
-            <Button type="submit" className="w-full">
-              Submit
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={status === "executing"}
+            >
+              {status === "executing" ? "Submitting..." : "Submit"}
             </Button>
           </form>
+          <div  className="absolute top-1 right-3">
+            <Button variant={"destructive"} className="w-4 h-4 p-3" onClick={() => setOpen(false)}>
+              X
+            </Button>
+          </div>
         </Form>
       </PopoverContent>
     </Popover>
