@@ -3,6 +3,7 @@ import ProductShowcase from "@/components/products/product-showcase";
 import ProductType from "@/components/products/product-type";
 import Reviews from "@/components/reviews/reviews";
 import FormatPrice from "@/lib/format-price";
+import reviewAverage from "@/lib/review-averege";
 import db from "@/server";
 import { productVariants } from "@/server/schema";
 import { Separator } from "@radix-ui/react-dropdown-menu";
@@ -39,6 +40,7 @@ export default async function ProductPage({
     with: {
       product: {
         with: {
+          reviews: true,
           productVariants: {
             with: {
               variantImages: true,
@@ -55,6 +57,8 @@ export default async function ProductPage({
     return redirect("/404");
   }
 
+  const reviewsAverage = reviewAverage(productVariant.product.reviews);
+  
   return (
     <main className="min-h-[calc(100dvh-100px)]">
       <section className=" flex flex-col md:flex-row gap-4 md:gap-8 lg:gap-12">

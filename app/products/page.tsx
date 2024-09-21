@@ -19,6 +19,6 @@ export default async function Example() {
 }
 
 export const metadata: Metadata = {
-  title: "products",
-  description: "products page for the shop",
+  title: "ShopSphere",
+  description: "List of all products",
 };
