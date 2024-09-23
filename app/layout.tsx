@@ -30,18 +30,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn("px-6 md:px-12 max-w-7xl mx-auto", `${roboto.className}`)}
-      >
+      <body className={roboto.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Nav />
-          <Toaster richColors />
-          {children}
+          <div className="flex-grow px-6 md:px-12 mx-auto max-w-7xl">
+            <Nav />
+            <Toaster richColors />
+            {children}
+          </div>
           <Footer />
         </ThemeProvider>
       </body>

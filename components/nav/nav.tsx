@@ -4,6 +4,7 @@ import UserButton from "@/components/nav/user-button";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
+import CartDrawer from "../cart/cart-drawer";
 
 const nav = async () => {
   const session = await auth();
@@ -11,11 +12,14 @@ const nav = async () => {
   return (
     <header className="py-6 h-[100px]">
       <nav>
-        <ul className="flex justify-between items-center">
-          <li>
+        <ul className="flex justify-between items-center gap-4 md:gap-8">
+          <li className="flex-1">
             <Link href={"/"} aria-label="logo">
               <Logo />
             </Link>
+          </li>
+          <li className="relative flex items-center hover:bg-muted">
+            <CartDrawer />
           </li>
           {!session ? (
             <li>
@@ -32,7 +36,7 @@ const nav = async () => {
             </li>
           ) : (
             <>
-              <li>
+              <li >
                 <UserButton
                   expires={session?.expires as string}
                   user={session?.user}
