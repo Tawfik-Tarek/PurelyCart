@@ -12,7 +12,7 @@ const nav = async () => {
   return (
     <header className="py-6 h-[100px]">
       <nav>
-        <ul className="flex justify-between items-center gap-4 md:gap-8">
+        <ul className="flex justify-between items-center gap-2 sm:gap-4 md:gap-8">
           <li className="flex-1">
             <Link href={"/"} aria-label="logo">
               <Logo />
@@ -23,11 +23,11 @@ const nav = async () => {
           </li>
           {!session ? (
             <li>
-              <Button asChild variant={"secondary"} className="h-8">
+              <Button asChild variant={"secondary"} className="h-8 bg-primary transition-all duration-200 ease-in-out">
                 <Link
                   aria-label="log-in"
                   href={"/auth/login"}
-                  className="text-center flex gap-2 items-center justify-center"
+                  className="text-center flex gap-2 items-center justify-center h-7 w-[60px] md:w-[90px]"
                 >
                   <LogIn className="h-4" />
                   <span>Login</span>
