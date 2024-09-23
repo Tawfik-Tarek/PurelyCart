@@ -34,7 +34,7 @@ export default function CartDrawer() {
           <ShoppingBag />
         </div>
       </DrawerTrigger>
-      <DrawerContent className="fixed bottom-0 left-0 max-h-[70vh] min-h-[50vh]">
+      <DrawerContent className="fixed bottom-0 left-0 max-h-[70dvh] min-h-[50dvh]">
         <DrawerHeader>
           <CartMessage />
         </DrawerHeader>

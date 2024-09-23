@@ -14,23 +14,23 @@ export default function CartMessage() {
       initial={{ opacity: 0, x: 10 }}
     >
       <DrawerTitle>
-        {checkoutProgress === "cart-page" ? "Your Cart Items" : null}
-        {checkoutProgress === "payment-page" ? "Choose a payment method" : null}
-        {checkoutProgress === "confirmation-page" ? "Order Confirmed" : null}
+        {checkoutProgress === "cart-page" && "Your Cart Items" }
+        {checkoutProgress === "payment-page" && "Choose a payment method" }
+        {checkoutProgress === "confirmation-page" && "Order Confirmed" }
       </DrawerTitle>
       <DrawerDescription className="py-1">
-        {checkoutProgress === "cart-page" ? "  View and edit your bag." : null}
-        {checkoutProgress === "payment-page" ? (
+        {checkoutProgress === "cart-page" && "  View and edit your bag."}
+        {checkoutProgress === "payment-page" && (
           <span
             onClick={() => setCheckoutProgress("cart-page")}
             className="flex items-center justify-center gap-1 cursor-pointer hover:text-primary"
           >
             <ArrowLeft size={14} /> Head back to cart
           </span>
-        ) : null}
+        ) }
         {checkoutProgress === "confirmation-page"
-          ? "You will recieve an email with your receipt!"
-          : null}
+          && "You will recieve an email with your receipt!"
+          }
       </DrawerDescription>
     </motion.div>
   );
