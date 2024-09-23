@@ -41,8 +41,8 @@ export default function RootLayout({
             <Nav />
             <Toaster richColors />
             {children}
+            <Footer />
           </div>
-          <Footer />
         </ThemeProvider>
       </body>
     </html>
