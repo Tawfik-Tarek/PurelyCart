@@ -8,9 +8,15 @@ import { variantTags } from "../schema";
 const action = createSafeActionClient();
 
 export const getRelatedItems = action
-  .schema(z.object({ variantId: z.number() }))
+  .schema(
+    z.object({
+      variantId: z.number(),
+      limit: z.number().optional().default(4),
+      offset: z.number().optional().default(0),
+    })
+  )
   .action(async ({ parsedInput }) => {
-    const { variantId } = parsedInput;
+    const { variantId, limit, offset } = parsedInput;
     if (!variantId) {
       return {
         error: {
@@ -19,7 +25,6 @@ export const getRelatedItems = action
       };
     }
 
-    // Fetch tags related to the given variant
     const tags = await db.query.variantTags.findMany({
       where: eq(variantTags.variantId, variantId),
     });
@@ -38,6 +43,8 @@ export const getRelatedItems = action
     // Find related items by all tags, excluding the current variant
     const relatedItems = await db.query.variantTags.findMany({
       where: inArray(variantTags.tag, relatedTags),
+      limit,
+      offset,
     });
 
     if (!relatedItems || relatedItems.length === 0) {
