@@ -37,10 +37,8 @@ export const getRelatedItems = action
       };
     }
 
-    // Extract all the tag names
     const relatedTags = tags.map((tag) => tag.tag);
 
-    // Find related items by all tags, excluding the current variant
     const relatedItems = await db.query.variantTags.findMany({
       where: inArray(variantTags.tag, relatedTags),
       limit,
