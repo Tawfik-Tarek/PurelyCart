@@ -18,7 +18,7 @@ export default function CartDrawer() {
     useCartStore();
   return (
     <Drawer open={cartOpen} onOpenChange={setCartOpen} modal={false}>
-      <DrawerTrigger>
+      <DrawerTrigger className="focus-visible:outline-none">
         <div className="relative px-2">
           <AnimatePresence>
             {cart.length > 0 && (
