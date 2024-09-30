@@ -7,12 +7,29 @@ import Credentials from "next-auth/providers/credentials";
 import { accounts, users } from "./schema";
 import { LoginSchema } from "@/types/login-schema";
 import { eq } from "drizzle-orm";
-
+import Stripe from "stripe";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db) as any,
   secret: process.env.AUTH_SECRET,
   session: { strategy: "jwt" },
+  events: {
+    createUser: async ({ user }) => {
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: "2024-06-20",
+      });
+
+      const customer = await stripe.customers.create({
+        email: user.email!,
+        name: user.name!,
+      });
+
+      await db
+        .update(users)
+        .set({ customerId: customer.id })
+        .where(eq(users.id, user.id!));
+    },
+  },
   callbacks: {
     async session({ session, token }) {
       if (session && token.sub) {
