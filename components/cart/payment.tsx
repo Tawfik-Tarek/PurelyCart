@@ -8,7 +8,7 @@ import PaymentForm from "./payment-form";
 export default function Payment() {
   const stripe = getStripe();
   const cart = useCartStore((state) => state.cart);
-  const total = cart.reduce((acc, item) => acc + item.price, 0);
+  const total = cart.reduce((acc, item) => acc + item.price * item.variant.quantity, 0);
   
   return (
     <motion.div>
