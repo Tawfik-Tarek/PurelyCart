@@ -11,10 +11,11 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import CartItems from "./cart-items";
 import CartMessage from "./cart-message";
+import OrderConfirmed from "./order-confirmed";
 const Payment = lazy(() => import("./payment"));
 
 export default function CartDrawer() {
-  const { cart, checkoutProgress, setCheckoutProgress, cartOpen, setCartOpen } =
+  const { cart, checkoutProgress, cartOpen, setCartOpen } =
     useCartStore();
   return (
     <Drawer open={cartOpen} onOpenChange={setCartOpen} modal={false}>
@@ -42,6 +43,7 @@ export default function CartDrawer() {
         <div className="overflow-auto p-4">
           {checkoutProgress === "cart-page" && <CartItems />}
           {checkoutProgress === "payment-page" && <Payment />}
+          {checkoutProgress === "confirmation-page" && <OrderConfirmed />}
         </div>
       </DrawerContent>
     </Drawer>

@@ -17,7 +17,7 @@ import { toast } from "sonner";
 export default function PaymentForm({ total }: { total: number }) {
   const stripe = useStripe();
   const elements = useElements();
-  const { cart, setCheckoutProgress ,  } = useCartStore();
+  const { cart, setCheckoutProgress , clearCart  } = useCartStore();
   const [isLoading, setIsLoading] = useState(false);
   const [errMessage, setErrMessage] = useState("");
 
@@ -27,7 +27,7 @@ export default function PaymentForm({ total }: { total: number }) {
         setIsLoading(false);
         toast.success(data.success.message);
         setCheckoutProgress("confirmation-page");
-        
+        clearCart();
       } else if (data?.error) {
         toast.error(data.error.message);
       }
