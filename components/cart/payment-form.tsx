@@ -10,14 +10,29 @@ import {
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { createPaymentIntent } from "@/server/actions/create-payment-intent";
-import { redirect } from "next/dist/server/api-utils";
+import { useAction } from "next-safe-action/hooks";
+import { CreateOrder } from "@/server/actions/create-order";
+import { toast } from "sonner";
 
 export default function PaymentForm({ total }: { total: number }) {
   const stripe = useStripe();
   const elements = useElements();
-  const { cart } = useCartStore();
+  const { cart, setCheckoutProgress ,  } = useCartStore();
   const [isLoading, setIsLoading] = useState(false);
   const [errMessage, setErrMessage] = useState("");
+
+  const { execute, status } = useAction(CreateOrder, {
+    onSuccess: ({ data }) => {
+      if (data?.success) {
+        setIsLoading(false);
+        toast.success(data.success.message);
+        setCheckoutProgress("confirmation-page");
+        
+      } else if (data?.error) {
+        toast.error(data.error.message);
+      }
+    },
+  });
 
   const handelSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +48,7 @@ export default function PaymentForm({ total }: { total: number }) {
     }
 
     const data = await createPaymentIntent({
-      amount: total*100,
+      amount: total * 100,
       currency: "usd",
       cart: cart.map((item) => ({
         quantity: item.variant.quantity,
@@ -71,7 +86,15 @@ export default function PaymentForm({ total }: { total: number }) {
         return;
       } else {
         setIsLoading(false);
-        console.log("Payment Success");
+        execute({
+          total,
+          products: cart.map((item) => ({
+            productId: item.id,
+            quantity: item.variant.quantity,
+            variantId: item.variant.variantId,
+          })),
+          status: "pending",
+        });
       }
     }
   };
@@ -80,8 +103,12 @@ export default function PaymentForm({ total }: { total: number }) {
     <form onSubmit={handelSubmit}>
       <PaymentElement />
       <AddressElement options={{ mode: "shipping" }} />
-      <Button disabled={!stripe || !elements}>
-        <span> Pay Now</span>
+      <Button
+        disabled={!stripe || !elements}
+        aria-label="pay now"
+        className="mt-3 w-full max-w-md mx-auto"
+      >
+        {isLoading ? "Processing..." : "Pay Now"}
       </Button>
     </form>
   );
