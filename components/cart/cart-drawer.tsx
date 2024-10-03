@@ -1,5 +1,5 @@
 "use client";
-
+import { lazy } from "react";
 import { useCartStore } from "@/lib/client-store";
 import { ShoppingBag } from "lucide-react";
 import {
@@ -11,7 +11,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import CartItems from "./cart-items";
 import CartMessage from "./cart-message";
-import Payment from "./payment";
+const Payment = lazy(() => import("./payment"));
 
 export default function CartDrawer() {
   const { cart, checkoutProgress, setCheckoutProgress, cartOpen, setCartOpen } =

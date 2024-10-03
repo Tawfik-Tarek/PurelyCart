@@ -35,14 +35,12 @@ const nav = async () => {
               </Button>
             </li>
           ) : (
-            <>
               <li >
                 <UserButton
                   expires={session?.expires as string}
                   user={session?.user}
                 />
               </li>
-            </>
           )}
         </ul>
       </nav>
