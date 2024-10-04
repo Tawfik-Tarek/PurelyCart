@@ -9,6 +9,7 @@ import db from "@/server";
 import { productVariants } from "@/server/schema";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { eq } from "drizzle-orm";
+import Head from "next/head";
 import { redirect } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -59,12 +60,18 @@ export default async function ProductPage({
   }
 
   const reviewsAverage = reviewAverage(productVariant.product.reviews);
-  
+
   return (
     <main className="min-h-[calc(100dvh-100px)]">
+      <Head>
+        <title>{productVariant.product.title} - Your Store Name</title>
+        <meta name="description" content={productVariant.product.description} />
+      </Head>
       <section className=" flex flex-col md:flex-row gap-4 md:gap-8 lg:gap-12">
         <div className="flex-1">
-          <ProductShowcase productVariants={productVariant.product.productVariants}/>
+          <ProductShowcase
+            productVariants={productVariant.product.productVariants}
+          />
         </div>
 
         <div className="flex flex-col gap-2 flex-1">
