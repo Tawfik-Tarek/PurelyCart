@@ -106,7 +106,7 @@ export default function PaymentForm({ total }: { total: number }) {
       <Button
         disabled={!stripe || !elements}
         aria-label="pay now"
-        className="mt-3 w-full max-w-md mx-auto"
+        className="mt-3 w-full"
       >
         {isLoading ? "Processing..." : "Pay Now"}
       </Button>
