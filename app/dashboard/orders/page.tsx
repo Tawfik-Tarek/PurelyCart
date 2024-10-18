@@ -1,7 +1,7 @@
 import db from "@/server";
 import { auth } from "@/server/auth";
 import { orders } from "@/server/schema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import {
   Card,
   CardContent,
@@ -59,6 +59,7 @@ export default async function Orders() {
         },
       },
     },
+    orderBy: desc(orders.created),
   });
 
   return (
@@ -139,9 +140,7 @@ export default async function Orders() {
                             <TableBody>
                               {order.orderProduct.map(
                                 ({ product, productVariants, quantity }) => (
-                                  <TableRow
-                                    key={product.id}
-                                  >
+                                  <TableRow key={product.id}>
                                     <TableCell>
                                       <Image
                                         src={
@@ -153,13 +152,21 @@ export default async function Orders() {
                                       />
                                     </TableCell>
                                     <TableCell>${product.price}</TableCell>
-                                    <TableCell className="text-xs font-medium">{product.title}</TableCell>
-                                    <TableCell>
-                                        <div className={`w-4 h-4 rounded-full`}
-                                            style={{backgroundColor:productVariants.color}}
-                                        ></div>
+                                    <TableCell className="text-xs font-medium">
+                                      {product.title}
                                     </TableCell>
-                                    <TableCell className="text-xs font-medium">{quantity}</TableCell>
+                                    <TableCell>
+                                      <div
+                                        className={`w-4 h-4 rounded-full`}
+                                        style={{
+                                          backgroundColor:
+                                            productVariants.color,
+                                        }}
+                                      ></div>
+                                    </TableCell>
+                                    <TableCell className="text-xs font-medium">
+                                      {quantity}
+                                    </TableCell>
                                   </TableRow>
                                 )
                               )}
