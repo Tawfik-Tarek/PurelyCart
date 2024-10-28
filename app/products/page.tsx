@@ -2,6 +2,8 @@ import { Products } from "@/components/products/products";
 import db from "@/server";
 import { Metadata } from "next";
 
+export const revalidate = 60 * 60;
+
 export default async function Example() {
   const data = await db.query.productVariants.findMany({
     with: {
