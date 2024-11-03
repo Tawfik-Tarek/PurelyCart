@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export const revalidate = 60 * 60;
 
-export default async function Example() {
+export default async function ProductsPage() {
   const data = await db.query.productVariants.findMany({
     with: {
       variantImages: true,
