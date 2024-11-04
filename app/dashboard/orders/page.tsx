@@ -38,6 +38,7 @@ import { redirect } from "next/navigation";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default async function Orders() {
   const user = await auth();
@@ -120,9 +121,20 @@ export default async function Orders() {
                               </Button>
                             </DialogTrigger>
                           </DropdownMenuItem>
+                          {
+                            order.receiptURL && (
+                              <DropdownMenuItem>
+                                <Button className="w-full" asChild variant={"ghost"}>
+                                  <Link href={order.receiptURL} target="_blank">
+                                    View Receipt
+                                  </Link>
+                                </Button>
+                              </DropdownMenuItem>
+                            )
+                          }
                         </DropdownMenuContent>
                       </DropdownMenu>
-                      <DialogContent>
+                      <DialogContent className="rounded-md">
                         <DialogHeader>
                           <DialogTitle>Order Details #{order.id}</DialogTitle>
                         </DialogHeader>
