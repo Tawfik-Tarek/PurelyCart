@@ -14,16 +14,23 @@ export default function Payment() {
     0
   );
   const {theme} = useTheme()
+  const formattedTotal = Number(total.toFixed(2));
+  const amountInSubunits = Math.round(formattedTotal * 100);
+
+  console.log("amountInSubunits", amountInSubunits);
+  
+
 
   return (
     <motion.div className="lg:px-20">
       <Elements
         stripe={stripe}
-        options={{ mode: "payment", currency: "usd", amount: total * 100 , appearance: {
+        options={{
+          mode: "payment", currency: "usd", amount: Number(amountInSubunits), appearance: {
           theme: theme === "dark" ? "night" : "flat"
         }}}
       >
-        <PaymentForm total={total} />
+        <PaymentForm total={formattedTotal} />
       </Elements>
     </motion.div>
   );

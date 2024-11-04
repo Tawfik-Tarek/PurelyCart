@@ -38,6 +38,7 @@ import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 export default async function Orders() {
   const user = await auth();
@@ -88,9 +89,9 @@ export default async function Orders() {
                   <TableCell>
                     <Badge
                       className={
-                        order.status === "succeed"
-                          ? "bg-green-700"
-                          : "bg-secondary-foreground hover:bg-secondary-foreground/80"
+                        cn(order.status === "succeeded"
+                          ? "bg-green-700 hover:bg-green-700/80"
+                          : "bg-amber-600 hover:bg-amber-600/70")
                       }
                     >
                       {order.status}

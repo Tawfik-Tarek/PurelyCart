@@ -14,7 +14,7 @@ type OrderInput = z.infer<typeof orderSchema>;
 export const CreateOrder = action
   .schema(orderSchema)
   .action(async ({ parsedInput: data }) => {
-    const { total, products, status } = data as OrderInput; // Cast data to OrderInput
+    const { total, products, status, paymentIntentId} = data as OrderInput; // Cast data to OrderInput
     if (!total || !products || !status) {
       return {
         error: {
@@ -38,6 +38,7 @@ export const CreateOrder = action
         userId: user.user.id,
         status,
         total,
+        paymentIntentId,
       })
       .returning();
 
@@ -51,7 +52,8 @@ export const CreateOrder = action
             productId,
             quantity,
             productVariantId: variantId,
-          }).returning()
+          })
+          .returning();
       })
     );
 
@@ -59,7 +61,7 @@ export const CreateOrder = action
       success: {
         message: "Order created successfully",
         order: order[0],
-        orderProducts
-      }
+        orderProducts,
+      },
     };
   });

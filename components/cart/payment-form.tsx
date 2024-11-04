@@ -48,7 +48,7 @@ export default function PaymentForm({ total }: { total: number }) {
     }
 
     const data = await createPaymentIntent({
-      amount: total * 100,
+      amount: Math.round(total * 100),
       currency: "usd",
       cart: cart.map((item) => ({
         quantity: item.variant.quantity,
@@ -94,6 +94,7 @@ export default function PaymentForm({ total }: { total: number }) {
             variantId: item.variant.variantId,
           })),
           status: "pending",
+          paymentIntentId: data.data.success.paymentIntentId,
         });
       }
     }
@@ -104,7 +105,7 @@ export default function PaymentForm({ total }: { total: number }) {
       <PaymentElement />
       <AddressElement options={{ mode: "shipping" }} />
       <Button
-        disabled={!stripe || !elements}
+        disabled={!stripe || !elements || isLoading}
         aria-label="pay now"
         className="mt-3 w-full"
       >
