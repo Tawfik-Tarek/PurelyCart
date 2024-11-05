@@ -9,20 +9,18 @@ export default function LoadingPage() {
         <div className="absolute inset-0 bg-black/50 z-20 w-full animate-pulse-slow" />
       </div>
 
-      <div className="p-4 space-y-4 animate-pulse">
-        {/* Header Skeleton */}
-        <div className="h-8 bg-gray-300 rounded w-1/3" />
+      <div className="p-4 space-y-4">
+        {/* Skeleton header */}
+        <div className="h-8 bg-gray-300 rounded w-1/3 animate-pulse"></div>
+        <div className="h-6 bg-gray-300 rounded w-1/4 animate-pulse"></div>
 
-        {/* Skeletons for items */}
-        <div className="space-y-4">
-          <div className="h-24 bg-gray-200 rounded w-full" />
-          <div className="h-24 bg-gray-200 rounded w-full" />
-          <div className="h-24 bg-gray-200 rounded w-full" />
+
+        {/* Skeleton card content */}
+        <div className="space-y-2">
+          <div className="h-6 bg-gray-300 rounded animate-pulse w-1/2"></div>
+          <div className="h-6 bg-gray-300 rounded animate-pulse w-3/4"></div>
+          <div className="h-6 bg-gray-300 rounded animate-pulse w-1/3"></div>
         </div>
-
-        {/* Placeholder for other page elements */}
-        <div className="h-8 bg-gray-300 rounded w-2/3" />
-        <div className="h-8 bg-gray-300 rounded w-1/2" />
       </div>
     </>
   );
