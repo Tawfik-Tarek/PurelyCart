@@ -31,6 +31,14 @@ export const emailSignIn = action
       };
     }
 
+    if (existingUser.password === null) {
+      return {
+        error: {
+          message: "You have signed up with a social account",
+        },
+      };
+    }
+
     const isMatch = await bcrypt.compare(password, existingUser.password!);
     if (isMatch) {
       if (existingUser.emailVerified) {
@@ -46,7 +54,7 @@ export const emailSignIn = action
             }
             if (token.token !== code) {
               console.log(`token is ${token.token} and code is ${code}`);
-              
+
               return {
                 error: {
                   message: "Invalid Code",
