@@ -28,7 +28,7 @@ export default async function Sales({ totalOrders }: { totalOrders: TotalOrders[
               <TableRow key={order.id} className='font-medium'>
                 <TableCell>
                   {order.order.user && (
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center gap-2 w-32 md:w-auto'>
                       {order.order.user.image && order.order.user.name ? (
                         <Image
                           src={order.order.user.image}
@@ -44,7 +44,7 @@ export default async function Sales({ totalOrders }: { totalOrders: TotalOrders[
                     </div>
                   )}
                 </TableCell>
-                <TableCell>{order.product.title}</TableCell>
+                <TableCell><div className='w-32 md:w-auto'>{order.product.title}</div></TableCell>
                 <TableCell>{order.product.price}</TableCell>
                 <TableCell>{order.quantity}</TableCell>
                 <TableCell>
