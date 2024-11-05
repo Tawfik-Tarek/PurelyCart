@@ -3,6 +3,7 @@ import db from '@/server'
 import { orderProduct } from '@/server/schema'
 import { desc } from 'drizzle-orm'
 import Sales from './sales'
+import Earnings from './earnings'
 
 export const revalidate = 0;
 
@@ -45,8 +46,9 @@ export default async function Analytics() {
         <CardTitle>Your Analytics</CardTitle>
         <CardDescription>check your sales</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col lg:flex-row gap-8">
         <Sales totalOrders={totalOrders} />
+        <Earnings totalOrders={totalOrders} />
       </CardContent>
     </Card>
   )
