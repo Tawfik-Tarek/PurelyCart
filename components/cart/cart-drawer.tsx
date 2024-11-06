@@ -13,6 +13,7 @@ import CartItems from "./cart-items";
 import CartMessage from "./cart-message";
 import OrderConfirmed from "./order-confirmed";
 import PaymentSkeleton from "./patment-skeleton";
+import CartProgress from "./cart-progress";
 
 // Lazy load Payment
 const Payment = lazy(() => import("./payment"));
@@ -39,10 +40,11 @@ export default function CartDrawer() {
           <ShoppingBag />
         </div>
       </DrawerTrigger>
-      <DrawerContent className="fixed bottom-0 left-0 max-h-[70dvh] min-h-[50dvh]">
+      <DrawerContent className="fixed bottom-0 left-0 max-h-[70dvh] min-h-[50dvh] md:max-h-[80dvh]">
         <DrawerHeader>
           <CartMessage />
         </DrawerHeader>
+        <CartProgress />
         <div className="overflow-auto p-4">
           {checkoutProgress === "cart-page" && <CartItems />}
           {checkoutProgress === "payment-page" && (
