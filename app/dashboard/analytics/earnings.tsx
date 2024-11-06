@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import WeeklyChart from "./weekly-chart";
 import { useMemo } from "react";
+import MonthlyChart from "./monthly-chart";
 
 export default function Earnings({ totalOrders }: { totalOrders: TotalOrders[] }) {
   const router = useRouter();
@@ -26,8 +27,11 @@ export default function Earnings({ totalOrders }: { totalOrders: TotalOrders[] }
 
   const activeChart = useMemo(() => {
     const weekly = WeeklyChart(chartItems)
+    const monthly = MonthlyChart(chartItems)
     if (period === "week") {
       return weekly
+    } else if (period === "month") {
+      return monthly
     }
   }, [period])
 
@@ -67,7 +71,7 @@ export default function Earnings({ totalOrders }: { totalOrders: TotalOrders[] }
               <Tooltip content={(props) => {
                 return (
                   <div>
-                    {props.payload?.map((item, index) => {
+                    {props.payload?.map((item) => {
                       return (
                         <div key={item.payload.date} className="bg-white text-primary p-2 rounded-md shadow-md">
                           <p>Revenue: {item.payload.revenue}$</p>
