@@ -57,7 +57,7 @@ export default function Earnings({ totalOrders }: { totalOrders: TotalOrders[] }
           This Month
         </Badge>
       </div>
-      <CardContent className="h-96">
+      <CardContent className="h-96 px-0 sm:px-6">
         {totalOrdersCount === 0 ? (
           <div>You have no earnings</div>
         ) : (
@@ -70,15 +70,14 @@ export default function Earnings({ totalOrders }: { totalOrders: TotalOrders[] }
                     {props.payload?.map((item, index) => {
                       return (
                         <div key={item.payload.date} className="bg-white text-primary p-2 rounded-md shadow-md">
-                          <p>Date: {item.payload.date}</p>
                           <p>Revenue: {item.payload.revenue}$</p>
+                          <p>Date: {item.payload.date}</p>
                         </div>
                       )
                     })}
                   </div>
                 )
               }} />
-              <Legend />
               <YAxis dataKey="revenue" />
               <XAxis dataKey="date" />
               <Bar dataKey="revenue" className="fill-primary" />
