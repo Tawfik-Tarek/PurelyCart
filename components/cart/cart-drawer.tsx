@@ -1,5 +1,5 @@
 "use client";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { useCartStore } from "@/lib/client-store";
 import { ShoppingBag } from "lucide-react";
 import {
@@ -12,11 +12,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import CartItems from "./cart-items";
 import CartMessage from "./cart-message";
 import OrderConfirmed from "./order-confirmed";
+import PaymentSkeleton from "./patment-skeleton";
+
+// Lazy load Payment
 const Payment = lazy(() => import("./payment"));
 
 export default function CartDrawer() {
-  const { cart, checkoutProgress, cartOpen, setCartOpen } =
-    useCartStore();
+  const { cart, checkoutProgress, cartOpen, setCartOpen } = useCartStore();
+
   return (
     <Drawer open={cartOpen} onOpenChange={setCartOpen} modal={false}>
       <DrawerTrigger className="focus-visible:outline-none">
@@ -42,7 +45,11 @@ export default function CartDrawer() {
         </DrawerHeader>
         <div className="overflow-auto p-4">
           {checkoutProgress === "cart-page" && <CartItems />}
-          {checkoutProgress === "payment-page" && <Payment />}
+          {checkoutProgress === "payment-page" && (
+            <Suspense fallback={<PaymentSkeleton />}>
+              <Payment />
+            </Suspense>
+          )}
           {checkoutProgress === "confirmation-page" && <OrderConfirmed />}
         </div>
       </DrawerContent>
