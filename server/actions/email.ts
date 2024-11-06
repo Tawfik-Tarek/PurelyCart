@@ -4,7 +4,6 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const domain = getBaseUrl();
-const logoUrl = `${domain}/logo.png`;
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-verification?token=${token}`;
   const { data, error } = await resend.emails.send({
@@ -14,9 +13,6 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
-          <header style="text-align: center; padding-bottom: 20px;">
-            <img src='${logoUrl}' alt="Acme Logo" style="max-width: 150px;"/>
-          </header>
           <main>
             <h1 style="color: #444;">Confirm Your Email Address</h1>
             <p>Hi there,</p>
@@ -53,9 +49,6 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
         <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
-          <header style="text-align: center; padding-bottom: 20px;">
-            <img src='${logoUrl}' alt="Acme Logo" style="max-width: 150px;"/>
-          </header>
           <main>
             <h1 style="color: #444;">Reset Your Password</h1>
             <p>Hi there,</p>
@@ -87,7 +80,7 @@ export const sendTwoFactorTokenByEmail = async (  email: string,token: string) =
   const { data, error } = await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
-    subject: "Sproud and Scribble - Your 2 Factor Token",
+    subject: "PurelyCart - Your 2 Factor Token",
     html: `<p>Your Confirmation Code: ${token}</p>`,
   });
   if (error) return console.log(error);

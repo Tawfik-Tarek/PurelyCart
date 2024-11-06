@@ -64,7 +64,7 @@ export default async function ProductPage({
   return (
     <main className="min-h-[calc(100dvh-100px)]">
       <Head>
-        <title>{productVariant.product.title} - ShopSphere</title>
+        <title>{productVariant.product.title} - PurelyCart</title>
         <meta name="description" content={productVariant.product.description} />
       </Head>
       <section className=" flex flex-col md:flex-row gap-4 md:gap-8 lg:gap-12">
