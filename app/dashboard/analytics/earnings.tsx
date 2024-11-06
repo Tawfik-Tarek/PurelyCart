@@ -6,7 +6,7 @@ import FormatPrice from "@/lib/format-price";
 import { TotalOrders } from "@/lib/infer-type";
 import { cn } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import WeeklyChart from "./weekly-chart";
 import { useMemo } from "react";
 import MonthlyChart from "./monthly-chart";
