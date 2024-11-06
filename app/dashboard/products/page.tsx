@@ -2,10 +2,14 @@ import db from "@/server/index";
 import placeholder from '@/public/placeholder_small.jpg'
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-
-
+import { auth } from "@/server/auth";
+import { redirect } from "next/navigation";
 
 export default async function Products() {
+  const session = await auth()
+  if (!session || session.user.role !== 'admin') {
+    return redirect("/");
+  }
   const products = await db.query.products.findMany({
     with:{
       productVariants:{
