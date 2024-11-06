@@ -36,16 +36,15 @@ export default function Earnings({ totalOrders }: { totalOrders: TotalOrders[] }
 
   const activeTotal = useMemo(() => {
     if (period === "month") {
-      return MonthlyChart(chartItems).reduce((acc, item) => acc + item.revenue, 0)
+      return FormatPrice(MonthlyChart(chartItems).reduce((acc, item) => acc + item.revenue, 0))
     }
-      return WeeklyChart(chartItems).reduce((acc, item) => acc + item.revenue, 0)
+    return FormatPrice(WeeklyChart(chartItems).reduce((acc, item) => acc + item.revenue, 0))
   }, [period])
 
   const handleRouteChange = (url: string) => {
     router.push(url, { scroll: false });
   };
 
-  // const formattedTotalRevenue = FormatPrice(totalRevenue);
 
   return (
     <Card className="flex-1 shrink-0 h-full">
