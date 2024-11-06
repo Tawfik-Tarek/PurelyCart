@@ -14,7 +14,10 @@ import MonthlyChart from "./monthly-chart";
 export default function Earnings({ totalOrders }: { totalOrders: TotalOrders[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const period = searchParams.get("period") || "week";
+  let period = searchParams.get("period") || "week";
+  if (period !== "week" && period !== "month") {
+    period = "week";
+  }
 
   const totalOrdersCount = totalOrders.length;
   const totalProducts = totalOrders.reduce((sum, order) => sum + order.quantity, 0);
