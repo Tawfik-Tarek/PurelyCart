@@ -16,7 +16,6 @@ export default function Earnings({ totalOrders }: { totalOrders: TotalOrders[] }
   const searchParams = useSearchParams();
   const period = searchParams.get("period") || "week";
 
-  const totalRevenue = totalOrders.reduce((sum, order) => sum + order.product.price * order.quantity, 0);
   const totalOrdersCount = totalOrders.length;
   const totalProducts = totalOrders.reduce((sum, order) => sum + order.quantity, 0);
 
@@ -35,16 +34,23 @@ export default function Earnings({ totalOrders }: { totalOrders: TotalOrders[] }
     }
   }, [period])
 
+  const activeTotal = useMemo(() => {
+    if (period === "month") {
+      return MonthlyChart(chartItems).reduce((acc, item) => acc + item.revenue, 0)
+    }
+      return WeeklyChart(chartItems).reduce((acc, item) => acc + item.revenue, 0)
+  }, [period])
+
   const handleRouteChange = (url: string) => {
     router.push(url, { scroll: false });
   };
 
-  const formattedTotalRevenue = FormatPrice(totalRevenue);
+  // const formattedTotalRevenue = FormatPrice(totalRevenue);
 
   return (
     <Card className="flex-1 shrink-0 h-full">
       <CardHeader>
-        <CardTitle>Your Revenue: {formattedTotalRevenue}</CardTitle>
+        <CardTitle>Your Revenue: {activeTotal}</CardTitle>
         <CardDescription>Here are your recent earnings</CardDescription>
       </CardHeader>
       <div className="flex gap-3 flex-wrap items-center mb-5 pl-5">
