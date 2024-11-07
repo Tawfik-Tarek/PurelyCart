@@ -12,6 +12,8 @@ import { eq } from "drizzle-orm";
 import Head from "next/head";
 import { redirect } from "next/navigation";
 
+export const revalidate = 60
+
 export async function generateStaticParams() {
   const data = await db.query.productVariants.findMany({
     with: {
