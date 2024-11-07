@@ -24,13 +24,11 @@ export async function generateStaticParams() {
     orderBy: (productVariants, { desc }) => [desc(productVariants.id)],
   });
 
-  if (!data) {
-    return [];
+  if (data) {
+    const slugID = data.map((variant) => ({ slug: variant.id.toString() }))
+    return slugID
   }
-
-  return data.map((variant) => ({
-    params: { slug: variant.id.toString() },
-  }));
+  return []
 }
 
 export default async function ProductPage({
