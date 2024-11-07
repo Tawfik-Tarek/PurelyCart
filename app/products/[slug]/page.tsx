@@ -12,6 +12,7 @@ import { eq } from "drizzle-orm";
 import Head from "next/head";
 import { redirect } from "next/navigation";
 
+// generateStaticParams replaces getStaticPaths for App Router
 export async function generateStaticParams() {
   const data = await db.query.productVariants.findMany({
     with: {
@@ -37,6 +38,8 @@ export default async function ProductPage({
   params: { slug: string };
 }) {
   const { slug } = params;
+
+  // Fetching product variant data based on the slug
   const productVariant = await db.query.productVariants.findFirst({
     where: eq(productVariants.id, Number(slug)),
     with: {
@@ -67,11 +70,9 @@ export default async function ProductPage({
         <title>{productVariant.product.title} - PurelyCart</title>
         <meta name="description" content={productVariant.product.description} />
       </Head>
-      <section className=" flex flex-col md:flex-row gap-4 md:gap-8 lg:gap-12">
+      <section className="flex flex-col md:flex-row gap-4 md:gap-8 lg:gap-12">
         <div className="flex-1">
-          <ProductShowcase
-            productVariants={productVariant.product.productVariants}
-          />
+          <ProductShowcase productVariants={productVariant.product.productVariants} />
         </div>
 
         <div className="flex flex-col gap-2 flex-1">
@@ -90,7 +91,7 @@ export default async function ProductPage({
           ></div>
           <p className="text-secondary-foreground"> Available Colors</p>
           <div className="flex gap-2">
-            {productVariant.product.productVariants.map((variant) => (
+            {productVariant.product.productVariants.map((variant: any) => (
               <ProductPick
                 key={variant.id}
                 id={variant.id}
@@ -99,7 +100,7 @@ export default async function ProductPage({
                 title={variant.product.title}
                 price={variant.product.price}
                 productId={variant.productId}
-                image={variant.variantImages[0].url}
+                image={variant.variantImages?.[0]?.url || "/default-image.jpg"}
               />
             ))}
           </div>
