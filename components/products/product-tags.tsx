@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export default function ProductTags() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const tags = ["all", "blue", "sale", "popular"];
+  const tags = ["all", "blue", "green"];
   const tag = searchParams.get("tag") || "all";
 
   // Redirect to base URL if tag is invalid
