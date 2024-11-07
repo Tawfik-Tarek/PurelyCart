@@ -18,7 +18,7 @@ import { use, useEffect, useState } from "react";
 import { Switch } from "../ui/switch";
 import { useRouter } from "next/navigation";
 
-const userButton = ({ user }: Session) => {
+const UserButton = ({ user }: Session) => {
   const { setTheme, theme } = useTheme();
   const [checked, setChecked] = useState<boolean>(false);
   const router = useRouter();
@@ -149,4 +149,4 @@ const userButton = ({ user }: Session) => {
   }
 };
 
-export default userButton;
+export default UserButton;
