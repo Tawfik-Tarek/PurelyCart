@@ -23,7 +23,7 @@ export function Products({ variants }: ProductTypes) {
       )
     }
     return variants
-  }, [paramTag])
+  }, [paramTag , variants])
 
   return (
     <main className="grid grid-cols-1 gap-4 py-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-10  place-items-end ">
