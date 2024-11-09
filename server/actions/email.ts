@@ -7,7 +7,7 @@ const domain = getBaseUrl();
 export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-verification?token=${token}`;
   const { data, error } = await resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
+    from: "tawfik@purelycart.store",
     to: email,
     subject: "Please, Confirm your email",
     html: `
@@ -43,7 +43,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 export const sendPasswordResetEmail = async (email: string, token: string) => {
   const confirmLink = `${domain}/auth/new-password?token=${token}`;
   const { data, error } = await resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
+    from: "tawfik@purelycart.store",
     to: email,
     subject: "Please, Confirm your Request for reseting password",
     html: `
@@ -78,7 +78,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 
 export const sendTwoFactorTokenByEmail = async (  email: string,token: string) => {
   const { data, error } = await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "tawfik@purelycart.store",
     to: email,
     subject: "PurelyCart - Your 2 Factor Token",
     html: `<p>Your Confirmation Code: ${token}</p>`,
