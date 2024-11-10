@@ -16,7 +16,6 @@ export default async function Analytics() {
   }
   const totalOrders = await db.query.orderProduct.findMany({
     orderBy: [desc(orderProduct.id)],
-    limit: 5,
     with: {
       order: {
         with: {
