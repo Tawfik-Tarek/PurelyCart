@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Favicon from "@/public/favicon.ico";
 import Nav from "@/components/nav/nav";
 import { Roboto } from "next/font/google";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/footer/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -13,8 +12,6 @@ const roboto = Roboto({
   style: ["normal", "italic"],
   subsets: ["latin"],
 });
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "PurelyCart",
