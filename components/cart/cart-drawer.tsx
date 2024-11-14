@@ -23,7 +23,7 @@ export default function CartDrawer() {
 
   return (
     <Drawer open={cartOpen} onOpenChange={setCartOpen} modal={false}>
-      <DrawerTrigger className="focus-visible:outline-none">
+      <DrawerTrigger className="focus-visible:outline-none" aria-label="cart">
         <div className="relative px-2">
           <AnimatePresence>
             {cart.length > 0 && (

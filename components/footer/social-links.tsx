@@ -5,12 +5,12 @@ export default function SocialLinks() {
     return (
       <ul className="flex gap-3 mt-5">
         <li>
-          <Link target="_blank" href="https://github.com/Tawfik-Tarek">
+          <Link target="_blank" href="https://github.com/Tawfik-Tarek" aria-label="github">
             <Github className="transition-all duration-300 ease-in-out hover:text-primary" />
           </Link>
         </li>
         <li>
-          <Link target="_blank" href="https://www.linkedin.com/in/tawfiktarek">
+          <Link target="_blank" href="https://www.linkedin.com/in/tawfiktarek" aria-label="linkedin">
             <LinkedinIcon className="transition-all duration-300 ease-in-out hover:text-primary" />
           </Link>
         </li>
