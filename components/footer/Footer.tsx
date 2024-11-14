@@ -3,36 +3,38 @@ import SocialLinks from "./social-links";
 import FooterSection from "./footer-section";
 
 export default function Footer() {
+  const unifiedHref = "/info"; // Set this as the single destination page
+
   const shoppingCategories = [
-    { href: "/category/electronics", label: "Electronics" },
-    { href: "/category/fashion", label: "Fashion" },
-    { href: "/category/home-appliances", label: "Home Appliances" },
-    { href: "/category/beauty", label: "Beauty & Health" },
-    { href: "/category/sports", label: "Sports & Outdoors" },
+    { href: unifiedHref, label: "Electronics" },
+    { href: unifiedHref, label: "Fashion" },
+    { href: unifiedHref, label: "Home Appliances" },
+    { href: unifiedHref, label: "Beauty & Health" },
+    { href: unifiedHref, label: "Sports & Outdoors" },
   ];
 
   const customerServices = [
-    { href: "/help/shipping", label: "Shipping Information" },
-    { href: "/help/returns", label: "Returns & Refunds" },
-    { href: "/help/faqs", label: "FAQs" },
-    { href: "/help/contact", label: "Customer Support" },
-    { href: "/help/tracking", label: "Order Tracking" },
+    { href: unifiedHref, label: "Shipping Information" },
+    { href: unifiedHref, label: "Returns & Refunds" },
+    { href: unifiedHref, label: "FAQs" },
+    { href: unifiedHref, label: "Customer Support" },
+    { href: unifiedHref, label: "Order Tracking" },
   ];
 
   const companyInfo = [
-    { href: "/about", label: "About Us" },
-    { href: "/team", label: "Meet the Team" },
-    { href: "/careers", label: "Careers" },
-    { href: "/blog", label: "Blog" },
-    { href: "/press", label: "Press Releases" },
+    { href: unifiedHref, label: "About Us" },
+    { href: unifiedHref, label: "Meet the Team" },
+    { href: unifiedHref, label: "Careers" },
+    { href: unifiedHref, label: "Blog" },
+    { href: unifiedHref, label: "Press Releases" },
   ];
 
   const legalInfo = [
-    { href: "/terms-of-service", label: "Terms of Service" },
-    { href: "/privacy-policy", label: "Privacy Policy" },
-    { href: "/cookie-policy", label: "Cookie Policy" },
-    { href: "/disclaimer", label: "Disclaimer" },
-    { href: "/accessibility", label: "Accessibility" },
+    { href: unifiedHref, label: "Terms of Service" },
+    { href: unifiedHref, label: "Privacy Policy" },
+    { href: unifiedHref, label: "Cookie Policy" },
+    { href: unifiedHref, label: "Disclaimer" },
+    { href: unifiedHref, label: "Accessibility" },
   ];
 
   return (
