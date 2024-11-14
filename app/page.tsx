@@ -35,7 +35,7 @@ export default async function Home() {
                       <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                         <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
                           <Image
-                            priority={true}
+                            loading="lazy"
                             src={firstImg}
                             alt="first image"
                             placeholder="blur"
@@ -46,7 +46,7 @@ export default async function Home() {
                         </div>
                         <div className="h-64 w-44 overflow-hidden rounded-lg">
                           <Image
-                            priority={true}
+                            loading="lazy"
                             src={secondImg}
                             alt="second image"
                             placeholder="blur"
@@ -70,7 +70,7 @@ export default async function Home() {
                         </div>
                         <div className="h-64 w-44 overflow-hidden rounded-lg">
                           <Image
-                            priority={true}
+                            loading="lazy"
                             src={fourthImg}
                             alt="fourth image"
                             placeholder="blur"
@@ -81,7 +81,7 @@ export default async function Home() {
                         </div>
                         <div className="h-64 w-44 overflow-hidden rounded-lg">
                           <Image
-                            priority={true}
+                            loading="lazy"
                             src={sixthImg}
                             alt="sixth image"
                             placeholder="blur"
@@ -94,7 +94,7 @@ export default async function Home() {
                       <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                         <div className="h-64 w-44 overflow-hidden rounded-lg">
                           <Image
-                            priority={true}
+                            loading="lazy"
                             src={fifthImg}
                             alt="fifth image"
                             placeholder="blur"
@@ -105,7 +105,7 @@ export default async function Home() {
                         </div>
                         <div className="h-64 w-44 overflow-hidden rounded-lg">
                           <Image
-                            priority={true}
+                            loading="lazy"
                             src={seventhImg}
                             alt="seventh image"
                             placeholder="blur"
