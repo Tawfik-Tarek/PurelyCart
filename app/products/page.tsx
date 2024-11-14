@@ -26,5 +26,5 @@ export default async function ProductsPage() {
 
 export const metadata: Metadata = {
   title: "PurelyCart",
-  description: "List of all products",
+  description: "PurelyCart List of all products",
 };
