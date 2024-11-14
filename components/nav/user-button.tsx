@@ -2,7 +2,7 @@
 
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 
 import {
   DropdownMenu,
@@ -14,7 +14,7 @@ import {
 import {  LogOut, Moon, Settings2, Sun, Truck } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Switch } from "../ui/switch";
 import { useRouter } from "next/navigation";
 
