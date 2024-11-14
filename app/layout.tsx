@@ -6,6 +6,7 @@ import "./globals.css";
 import Footer from "@/components/footer/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
+import Head from "next/head";
 
 const roboto = Roboto({
   weight: ["400", "500", "700", "900"],
@@ -26,6 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preload" href="/public/home_page/3.jpg" as="image" />
+      </Head>
       <body className={roboto.className}>
         <ThemeProvider
           attribute="class"
