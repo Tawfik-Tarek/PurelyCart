@@ -1,6 +1,5 @@
 # PurelyCart - Modern E-commerce Platform
 
-![PurelyCart Logo](public/favicon.ico)
 
 PurelyCart is a full-featured e-commerce platform built with Next.js, offering a seamless shopping experience with a beautiful, responsive interface. This application combines modern design, robust functionality, and efficient performance to deliver an exceptional online shopping solution.
 
@@ -148,4 +147,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-Developed with ❤️ by the Tawfik Tarek
+Developed with ❤️ by Tawfik Tarek
