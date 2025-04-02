@@ -30,8 +30,13 @@ import { useAction } from "next-safe-action/hooks";
 import { addReview } from "@/server/actions/add-review";
 import { toast } from "sonner";
 import { useState } from "react";
+import { Card } from "@/components/ui/card";
 
-export default function ReviewsForm() {
+export default function ReviewsForm({
+  hasPurchased = false,
+}: {
+  hasPurchased?: boolean;
+}) {
   const search = useSearchParams();
   const productId = search.get("productId");
   const [open, setOpen] = useState<boolean>(false);
@@ -64,8 +69,23 @@ export default function ReviewsForm() {
       productId: Number(productId),
     });
   };
+
+  if (!hasPurchased) {
+    return (
+      <Card className="p-4 mb-4 text-center">
+        <p className="text-muted-foreground">
+          You can only review products you've purchased
+        </p>
+      </Card>
+    );
+  }
+
   return (
-    <Popover open={open} onOpenChange={setOpen} modal={false}>
+    <Popover
+      open={open}
+      onOpenChange={setOpen}
+      modal={false}
+    >
       <PopoverTrigger asChild>
         <div className="w-full">
           <Button
@@ -80,7 +100,10 @@ export default function ReviewsForm() {
       </PopoverTrigger>
       <PopoverContent className="relative">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4"
+          >
             <FormField
               control={form.control}
               name="comment"
@@ -127,7 +150,7 @@ export default function ReviewsForm() {
                             "text-primary bg-transparent transition-all duration-300 ease-in-outhover:text-yellow-500",
                             rating <= form.getValues("rating")
                               ? "fill-primary"
-                              : "fill-transparent",
+                              : "fill-transparent"
                           )}
                           onClick={() => {
                             form.setValue("rating", rating);
@@ -148,8 +171,12 @@ export default function ReviewsForm() {
               {status === "executing" ? "Submitting..." : "Submit"}
             </Button>
           </form>
-          <div  className="absolute top-1 right-3">
-            <Button variant={"destructive"} className="w-4 h-4 p-3" onClick={() => setOpen(false)}>
+          <div className="absolute top-1 right-3">
+            <Button
+              variant={"destructive"}
+              className="w-4 h-4 p-3"
+              onClick={() => setOpen(false)}
+            >
               X
             </Button>
           </div>

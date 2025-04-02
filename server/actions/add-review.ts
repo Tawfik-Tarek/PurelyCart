@@ -1,9 +1,9 @@
-'use server'
+"use server";
 
 import { reviewsSchema } from "@/types/reviews-schema";
 import { createSafeActionClient } from "next-safe-action";
 import db from "..";
-import { reviews } from "../schema";
+import { reviews, orders, orderProduct } from "../schema";
 import { auth } from "../auth";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -37,6 +37,28 @@ export const addReview = action
 
     if (comment.length < 4 || comment.length > 255) {
       throw new Error("Comment must be between 4 and 255 characters");
+    }
+
+    // Check if user has purchased this product
+    const userOrders = await db.query.orders.findMany({
+      where: eq(orders.userId, session.user.id),
+      with: {
+        orderProduct: {
+          where: eq(orderProduct.productId, productId),
+        },
+      },
+    });
+
+    const hasPurchased = userOrders.some(
+      (order) => order.orderProduct.length > 0
+    );
+
+    if (!hasPurchased) {
+      return {
+        error: {
+          message: "You can only review products you've purchased",
+        },
+      };
     }
 
     const existedReview = await db.query.reviews.findFirst({
