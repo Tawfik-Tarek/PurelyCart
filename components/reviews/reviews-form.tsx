@@ -74,7 +74,7 @@ export default function ReviewsForm({
     return (
       <Card className="p-4 mb-4 text-center">
         <p className="text-muted-foreground">
-          You can only review products you've purchased
+          You can only review products you&apos;ve purchased
         </p>
       </Card>
     );
