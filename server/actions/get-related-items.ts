@@ -2,8 +2,8 @@
 import { createSafeActionClient } from "next-safe-action";
 import { z } from "zod";
 import db from "..";
-import { eq, inArray } from "drizzle-orm";
-import { variantTags } from "../schema";
+import { eq, inArray, and, not } from "drizzle-orm";
+import { variantTags, productVariants } from "../schema";
 
 const action = createSafeActionClient();
 
@@ -25,6 +25,26 @@ export const getRelatedItems = action
       };
     }
 
+    // First, get the current variant to know its productId
+    const currentVariant = await db.query.productVariants.findFirst({
+      where: eq(productVariants.id, variantId),
+      columns: {
+        productId: true,
+      },
+    });
+
+    console.log("Current Variant:", currentVariant);
+    
+
+    if (!currentVariant) {
+      return {
+        error: {
+          message: "Variant not found",
+        },
+      };
+    }
+
+    // Get tags for the current variant
     const tags = await db.query.variantTags.findMany({
       where: eq(variantTags.variantId, variantId),
     });
@@ -39,37 +59,55 @@ export const getRelatedItems = action
 
     const relatedTags = tags.map((tag) => tag.tag);
 
-    const relatedItems = await db.query.variantTags.findMany({
-      where: inArray(variantTags.tag, relatedTags),
+    // Get distinct variant IDs that share any tag with the current variant
+    const relatedVariantIdsQuery = await db.query.variantTags.findMany({
+      where: and(
+        inArray(variantTags.tag, relatedTags),
+        not(eq(variantTags.variantId, variantId)) // Exclude the current variant
+      ),
+      columns: {
+        variantId: true,
+      },
+    });
+
+    const relatedVariantIds = [
+      ...new Set(relatedVariantIdsQuery.map((item) => item.variantId)),
+    ];
+
+    if (relatedVariantIds.length === 0) {
+      return {
+        error: {
+          message: "No related items found",
+        },
+      };
+    }
+
+    // Fetch the complete data for related variants, excluding same product
+    const relatedProducts = await db.query.productVariants.findMany({
+      where: and(
+        inArray(productVariants.id, relatedVariantIds),
+        not(eq(productVariants.productId, currentVariant.productId)) // Exclude same product variants
+      ),
+      with: {
+        variantImages: true,
+        variantTags: true,
+        product: true,
+      },
       limit,
       offset,
     });
 
-    if (!relatedItems || relatedItems.length === 0) {
+    if (!relatedProducts || relatedProducts.length === 0) {
       return {
         error: {
           message: "No related items found",
         },
       };
     }
-
-    const relatedItemIds = relatedItems
-      .map((item) => item.variantId)
-      .filter((id) => id !== variantId);
-
-    if (relatedItemIds.length === 0) {
-      return {
-        error: {
-          message: "No related items found",
-        },
-      };
-    }
-
-    const uniqueRelatedItemIds = [...new Set(relatedItemIds)];
 
     return {
       success: {
-        relatedItemIds: uniqueRelatedItemIds,
+        relatedProducts,
       },
     };
   });

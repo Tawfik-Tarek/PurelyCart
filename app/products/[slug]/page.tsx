@@ -2,6 +2,7 @@ import AddCart from "@/components/cart/add-cart";
 import ProductPick from "@/components/products/product-pick";
 import ProductShowcase from "@/components/products/product-showcase";
 import ProductType from "@/components/products/product-type";
+import RelatedProducts from "@/components/products/related-products";
 import Reviews from "@/components/reviews/reviews";
 import FormatPrice from "@/lib/format-price";
 import reviewAverage from "@/lib/review-averege";
@@ -12,7 +13,7 @@ import { eq } from "drizzle-orm";
 import Head from "next/head";
 import { redirect } from "next/navigation";
 
-export const revalidate = 60
+export const revalidate = 60;
 
 export async function generateStaticParams() {
   const data = await db.query.productVariants.findMany({
@@ -25,10 +26,10 @@ export async function generateStaticParams() {
   });
 
   if (data) {
-    const slugID = data.map((variant) => ({ slug: variant.id.toString() }))
-    return slugID
+    const slugID = data.map((variant) => ({ slug: variant.id.toString() }));
+    return slugID;
   }
-  return []
+  return [];
 }
 
 export default async function ProductPage({
@@ -65,7 +66,10 @@ export default async function ProductPage({
     <main className="min-h-[calc(100dvh-100px)]">
       <Head>
         <title>{productVariant.product.title} - PurelyCart</title>
-        <meta name="description" content={productVariant.product.description} />
+        <meta
+          name="description"
+          content={productVariant.product.description}
+        />
       </Head>
       <section className=" flex flex-col md:flex-row gap-4 md:gap-8 lg:gap-12">
         <div className="flex-1">
@@ -107,6 +111,9 @@ export default async function ProductPage({
         </div>
       </section>
       <Reviews productId={productVariant.productId} />
+
+      <Separator className="h-[1px] bg-black/30 my-8 dark:bg-gray-200" />
+      <RelatedProducts variantId={productVariant.id} />
     </main>
   );
 }
